@@ -170,7 +170,7 @@ Modifier le `pom.xml` de `WebFlux` comme ceci:
 
 ```
     <properties>
-        <jetty.version>10.0.0-SNAPSHOT</jetty.version>
+        <jetty.version>9.4.7.v20170914</jetty.version>
     </properties>
 
     ...
