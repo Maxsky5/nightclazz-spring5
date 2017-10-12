@@ -19,8 +19,8 @@
     </parent>
 
     <properties>
-        <jetty.version>10.0.0-SNAPSHOT</jetty.version>
-        <!--jetty.version>9.4.6.v20170531</jetty.version-->
+        <!--jetty.version>10.0.0-SNAPSHOT</jetty.version-->
+        <jetty.version>9.4.7.v20170914</jetty.version>
         <!-- https://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-versions -->
         <alpn-version>8.1.11.v20170118</alpn-version>
     </properties>

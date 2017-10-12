@@ -3,7 +3,7 @@ server:
     enabled: true
     mime-types: application/json,text/css,application/javascript,text/html
     min-response-size: 2048
-
+  port: 8443
   ssl:
     key-store: classpath:keystore.jks
     key-store-password: secret
@@ -14,3 +14,6 @@ spring:
   resources:
     chain:
       enabled: true
+  data:
+    mongodb:
+      uri: mongodb://nc-spring5:nc-spring5@ds133044.mlab.com:33044/nc-spring5

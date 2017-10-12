@@ -4,7 +4,8 @@ import com.zenika.domain.Drawing;
 import com.zenika.domain.DrawingInfo;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.eclipse.jetty.server.PushBuilder;
+import org.eclipse.jetty.server.Request;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
@@ -13,12 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import reactor.core.publisher.Mono;
 
-import javax.servlet.http.PushBuilder;
-import java.awt.*;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
-import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -56,7 +54,9 @@ public class DrawingController {
     }
 
     @GetMapping("/")
-    public String index(final PushBuilder pushBuilder) {
+    public String index(HttpServletRequest request) {
+
+        PushBuilder pushBuilder = ((Request) request).getPushBuilder();
         mongoTemplate.find(findAllQuery(), DrawingInfo.class, "drawings")
                 .collectList()
                 .block()

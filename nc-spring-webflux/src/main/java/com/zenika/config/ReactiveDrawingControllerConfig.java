@@ -25,7 +25,7 @@ public class ReactiveDrawingControllerConfig {
      */
     @Bean
     public ReactiveMongoTemplate reactiveMongoTemplate(final MongoClient mongoClient) {
-        return new ReactiveMongoTemplate(mongoClient, "nightclazz");
+        return new ReactiveMongoTemplate(mongoClient, "nc-spring5");
     }
 
     /**
