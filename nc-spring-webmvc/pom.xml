@@ -20,7 +20,7 @@
 
     <properties>
         <jetty.version>10.0.0-SNAPSHOT</jetty.version>
-        <!--jetty.version>9.4.6.v20170531</jetty.version-->
+        <!--jetty.version>9.4.7.v20170914</jetty.version-->
         <!-- https://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-versions -->
         <alpn-version>8.1.11.v20170118</alpn-version>
     </properties>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.0-b05</version>
+			<version>4.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -61,19 +61,13 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-alpn-server</artifactId>
+            <artifactId>jetty-alpn-openjdk8-server</artifactId>
             <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-jndi</artifactId>
             <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mortbay.jetty.alpn</groupId>
-            <artifactId>alpn-boot</artifactId>
-            <version>${alpn-version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
