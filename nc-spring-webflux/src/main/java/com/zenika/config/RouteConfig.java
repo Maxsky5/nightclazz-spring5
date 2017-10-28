@@ -21,7 +21,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
  *
  * @author Guillaume DROUET
  */
-//@Configuration
+@Configuration
 public class RouteConfig {
 
     /**
@@ -31,18 +31,18 @@ public class RouteConfig {
      * @return the new bean
      */
     @Bean
-    public RouterFunction<ServerResponse> routingFunction(final ReactiveDrawingController controller) {
+    public RouterFunction<ServerResponse> routingFunction( ReactiveDrawingController controller) {
         return getDrawingsRoute(controller).and(addDrawingRoute(controller)).and(addCorsRoute());
     }
 
-    private static RouterFunction<ServerResponse> getDrawingsRoute(final ReactiveDrawingController controller) {
+    private static RouterFunction<ServerResponse> getDrawingsRoute( ReactiveDrawingController controller) {
         return route(
                 GET("/drawings"),
                 req -> ok().contentType(MediaType.TEXT_EVENT_STREAM).body(controller.getDrawings(), DrawingInfo.class)
         );
     }
 
-    private static RouterFunction<ServerResponse> addDrawingRoute(final ReactiveDrawingController controller) {
+    private static RouterFunction<ServerResponse> addDrawingRoute( ReactiveDrawingController controller) {
         return route(
                 POST("/drawing").and(contentType(MediaType.APPLICATION_JSON)),
                 req -> initJsonResponse().body(controller.add(req.bodyToMono(Drawing.class)), String.class)

@@ -24,8 +24,8 @@ public class ReactiveDrawingControllerConfig {
      * @return the new bean
      */
     @Bean
-    public ReactiveMongoTemplate reactiveMongoTemplate(final MongoClient mongoClient) {
-        return new ReactiveMongoTemplate(mongoClient, "nc-spring5");
+    public ReactiveMongoTemplate reactiveMongoTemplate(MongoClient mongoClient) {
+        return new ReactiveMongoTemplate(mongoClient, "spring-reactive");
     }
 
     /**
@@ -35,7 +35,7 @@ public class ReactiveDrawingControllerConfig {
      * @return the new bean
      */
     @Bean
-    public ReactiveDrawingController drawingController(final DrawingRepository repository) {
+    public ReactiveDrawingController drawingController(DrawingRepository repository) {
         return new ReactiveDrawingControllerImpl(repository);
     }
 }

@@ -20,7 +20,7 @@ public class ReactiveDrawingControllerImpl implements ReactiveDrawingController 
      *
      * @param drawingRepository an abstract, standard drawing repository to perform CRUD operations
      */
-    public ReactiveDrawingControllerImpl(final DrawingRepository drawingRepository) {
+    public ReactiveDrawingControllerImpl( DrawingRepository drawingRepository) {
         this.drawingRepository = drawingRepository;
     }
 
@@ -28,7 +28,7 @@ public class ReactiveDrawingControllerImpl implements ReactiveDrawingController 
      * {@inheritDoc}
      */
     @Override
-    public Mono<String> add(final Mono<Drawing> drawing) {
+    public Mono<String> add( Mono<Drawing> drawing) {
         return drawingRepository.saveAll(drawing).single().map(Drawing::getId);
     }
 
