@@ -48,7 +48,7 @@ public class ReactiveDrawingControllerTest {
         public ReactiveDrawingController mockController() {
             final ReactiveDrawingController controller = mock(ReactiveDrawingController.class);
             when(controller.add(any(Mono.class))).thenReturn(
-                    Mono.just(someDrawing("3"))
+                    Mono.just(someDrawingStr("3"))
             );
 
             when(controller.getDrawings()).thenReturn(
@@ -61,6 +61,14 @@ public class ReactiveDrawingControllerTest {
 
     private WebTestClient client;
 
+    private static String someDrawingStr(final String id) {
+        final Drawing drawing = new Drawing();
+        drawing.setBase64Image("");
+        drawing.setAuthor("gdrouet");
+        drawing.setId(id);
+        return drawing.getId();
+    }
+    
     private static Drawing someDrawing(final String id) {
         final Drawing drawing = new Drawing();
         drawing.setBase64Image("");
