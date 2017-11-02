@@ -14,7 +14,7 @@ Dès qu'un dessin est ajouté, il apparaît dans la liste des dessins de tous le
 
 ## Architecture
 
-Le schema d'architecture peut se présenter ainsi :
+Le schéma d'architecture peut se présenter ainsi :
 
 ```
                      +-------------+
@@ -42,21 +42,21 @@ Le schema d'architecture peut se présenter ainsi :
 ```
 
 * Les images sont stockées dans `MongoDB` en base 64, elles seront chargées par les modules WEB
-* Un premier module est basé sur `WebFlux` correspond à l'API de l'application:
+* Un premier module est basé sur `WebFlux`, il correspond à l'API de l'application:
     * Le navigateur y ouvre une connexion SSE pour recevoir les images
     * Afin d'envoyer les URLs des images, le module `WebFlux` [crée un tailable cursor](https://docs.mongodb.com/manual/core/tailable-cursors/)
     * Un service WEB permet l'ajout d'une nouvelle image qui sera naturellement reçue via le `tailable cursor` dès son enregistrement
 * Un second module basé sur `WebMvc` permet de servir les statics:
     * Un service WEB permet de charger une image en fonction de son ID.
     * Le navigateur s'y connecte en HTTP/2
-    * Lorsque la page HTML est retournée, le module utiliser le HTTP/2 `server-push` pour envoyer le contenu des images existantes
+    * Lorsque la page HTML est retournée, le module utilise le HTTP/2 `server-push` pour envoyer le contenu des images existantes
 
 ## Pré-requis
 
-* Diposer d'un JDK 8
+* Disposer d'un JDK 8
 * Avoir un accès à une instance MongoDB 3
 * Avoir une connexion internet
-* Utiliser Eclispe ou IntelliJ de préférence
+* Utiliser Eclipse ou IntelliJ de préférence
 
 ## Resources utiles
 
@@ -77,12 +77,12 @@ Elles sont citées dans un ordre cohérent avec celui des exercices.
 
 ### Le module WebFlux
 
-Dans cet exercice, nous allons déclarer le contrat d'interface de l'API, les mapings et tests unitaires.
+Dans cet exercice, nous allons déclarer le contrat d'interface de l'API, les mappings et tests unitaires.
 Pour initialiser le module, allez sur `spring initializr` et sélectionnez `Spring Boot 2`.
 Ajoutez les modules et `Reactive Web` et `Reactive Mongo`, conservez `Maven`.
 Téléchargez l'archive ZIP et ouvrez le projet dans votre IDE.
 
-Créer les objets du domaine:
+Créez les objets du domaine:
 * Une classe `DrawingInfo` annotée `@Document(collection = "drawings")` qui contient deux attributs de type String `id` et `author`
 * Une classe `Drawing` qui étend `DrawingInfo` avec un attribut de type String `base64Image`
 
@@ -98,8 +98,8 @@ Nous allons plutôt utiliser un bean de type `RouterFunction` pour câbler les m
 Créez une classe de configuration `@Configuration` avec une méthode `@Bean public RouterFunction<ServerResponse> routingFunction(ReactiveDrawingController)`.
 Utilisez les méthodes statiques de `RouterFunctions` pour créer deux mappings:
 
-* Un premier qui accepte une requête en `GET` sur `/drawings` et qui envoit en réponse `ReactiveDrawingController#getDrawings()` et `MediaType.TEXT_EVENT_STREAM` comme `Content-Type`.
-* Un second qui accepte une requête en `POST` sur `/drawing` qui envoit en réponse `ReactiveDrawingController#add(Mono<Drawing>)`. La requête et la réponse sont en `JSON`.
+* Un premier qui accepte une requête en `GET` sur `/drawings` et qui envoie en réponse `ReactiveDrawingController#getDrawings()` et `MediaType.TEXT_EVENT_STREAM` comme `Content-Type`.
+* Un second qui accepte une requête en `POST` sur `/drawing` qui envoie en réponse `ReactiveDrawingController#add(Mono<Drawing>)`. La requête et la réponse sont en `JSON`.
 
 Nous allons maintenant créer des tests unitaires.
 Créez une classe de test `@SpringBootTest`.
@@ -111,7 +111,7 @@ Pensez à importer votre classe de configuration qui créee le `RouterFunctions`
 Avant d'écrire votre premier test, il vous faut un `WebTestClient` en tant qu'attribut.
 Regardez la [Javadoc](https://docs.spring.io/spring/docs/5.0.x/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html) pour trouver comment créer une instance de `WebTestClient` qui tient compte de votre `RouterFunction`.
 
-Ecrire une méthode `@Test` qui utilise le `WebTestClient` pour envoyer une requête sur `/drawings`.
+Ecrivez une méthode `@Test` qui utilise le `WebTestClient` pour envoyer une requête sur `/drawings`.
 Manipulez l'API pour vérifier que le statut de la réponse est `ok` et qu'il contient bien les éléments du `Flux` dans votre `mock`.
 
 ### Le module WebMvc
@@ -120,13 +120,13 @@ Dans cet exercice, nous allons créer le module web qui va fournir les `statics`
 
 Pour initialiser le module, allez sur `spring initializr` et sélectionnez `Spring Boot 2`.
 Ajoutez les modules et `Web` et `Reactive Mongo`, conservez `Maven`.
-Télécharger l'archive ZIP et ouvrez le projet dans votre IDE.
+Téléchargez l'archive ZIP et ouvrez le projet dans votre IDE.
 
 Créez les classes du domaine `Drawing` et `DrawingInfo` comme dans `WebFlux` (on s'autorisera un peu de duplication plutôt que de créer un module commun).
 
-Créer maintenant une classe `DrawingController` et injectez dans le constructeur un `ReactiveMongoTemplate`.
+Créez maintenant une classe `DrawingController` et injectez dans le constructeur un `ReactiveMongoTemplate`.
 
-Implémenter un service web sur l'URI `/drawing/{id}` qui:
+Implémentez un service web sur l'URI `/drawing/{id}` qui:
 * Prend en paramètre l'ID du dessin (type String)
 * Retourne un tableau de `byte` (precisez dans `@GetMapping` l'attribut `produces=MediaType.IMAGE_PNG_VALUE` et ajoutez l'annotation `ResponseBody`)
 * Utilise `ReactiveMongoTemplate#findById()` pour charger un dessin de type `Drawing` et le map en tableau de `byte`
@@ -136,7 +136,7 @@ Implémentez une seconde méthode avec un mapping sur `/`:
 * Utilisez `ReactiveMongoTemplate#find()` pour charger la liste des dessins via le type `DrawingInfo` et effectuez un `server-push`  sur chacune des URLs d'image obtenues à partir des ID des dessins.
 * Retourne la String `drawing.html`
 
-Enfin créer une classe `@Configuration` dans laquelle vous:
+Enfin créez une classe `@Configuration` dans laquelle vous:
 * ajoutez la vue `drawing`: https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L22-L25
 * configurez le client `MongoDB`: https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L43-L46
 
@@ -150,7 +150,7 @@ Vous y trouverez:
 `HTTP/2` ne fonctionne qu'en HTTPs. 
 C'est pour cela qu'il faut avoir les éléments de configuration nécessaires à l'activation de HTTPs.
 
-A noter également que l'application envoi des requêtes vers l'API du module `WebFlux`.
+A noter également que l'application envoie des requêtes vers l'API du module `WebFlux`.
 Si la page est chargée en HTTPs, alors `WebFlux` doit aussi écouter en HTTPs.
 Nous allons donc également configurer HTTPs pour `WebFlux`.
 
@@ -166,7 +166,7 @@ Par défaut, `Spring Boot` doit pouvoir automatiquement configurer HTTPs avec le
 Il faut donc substituer un bean de configuration spécifique qui accède à l'API native du conteneur de servlet.
 Nous allons utiliser `Jetty` dans les deux modules.
 
-Modifier le `pom.xml` de `WebFlux` comme ceci:
+Modifiez le `pom.xml` de `WebFlux` comme ceci:
 
 ```
     <properties>
@@ -204,7 +204,7 @@ Modifier le `pom.xml` de `WebFlux` comme ceci:
     </repositories>
 ```
 
-Modifier le `pom.xml` de `WebMvc` comme ceci (il faut plus de modules pour `HTTP/2`):
+Modifiez le `pom.xml` de `WebMvc` comme ceci (il faut plus de modules pour `HTTP/2`):
 
 ```
     <properties>
@@ -285,7 +285,7 @@ Pour `WebMvc`, on peut passer par un `WebServerFactoryCustomizer`:
 
 ### Lancer WebMvc
 
-Nous allons maintenant configurer les pramaètres de lancement de `WebMvc`.
+Nous allons maintenant configurer les paramètres de lancement de `WebMvc`.
 Dans votre IDE, ajustez les options de la JVM avec le chemin du JAR ALPN:
 `-Xbootclasspath/p:<<MAVEN_LCOAL_REPO>>/org/mortbay/jetty/alpn/alpn-boot/<<version>>/alpn-boot-<<version>>.jar`
 
@@ -430,6 +430,6 @@ Essayez de réécrire les différentes méthodes de votre classe de configuratio
 Inspirez-vous des ressources citées plus haut afin de trouver des élémens syntaxiques qui pourront vous aider.
 
 Si vous disposez de `IntelliJ`, un support avancé du language est proposé.
-Lorsque vous copier/coller du code Java dans une classe Kotlin, l'IDE peut vous convertire relatvement efficacement le code.
+Lorsque vous copier/coller du code Java dans une classe Kotlin, l'IDE peut vous convertir relatvement efficacement le code.
 
 Une fois terminé testez de nouveau l'application.
