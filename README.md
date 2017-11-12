@@ -137,10 +137,10 @@ Implémentez une seconde méthode avec un mapping sur `/`:
 * Retourne la String `drawing.html`
 
 Enfin créez une classe `@Configuration` dans laquelle vous:
-* ajoutez la vue `drawing`: https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L22-L25
-* configurez le client `MongoDB`: https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L43-L46
+* ajoutez la vue `drawing`: https://github.com/Zenika/nightclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L22-L25
+* configurez le client `MongoDB`: https://github.com/Zenika/nightclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L43-L46
 
-Dans `src/main/resources`, décompressez le contenu de cette archive: https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/gdrouet/nitghtclazz-spring5/tree/master/nc-spring-webmvc/src/main/resources
+Dans `src/main/resources`, décompressez le contenu de cette archive: https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/Zenika/nightclazz-spring5/tree/master/nc-spring-webmvc/src/main/resources
 Vous y trouverez:
 
 * Un répertoire `static` dont le contenu sera exposé par `Spring Boot`. C'est la partie `front` de l'application.
@@ -156,7 +156,7 @@ Nous allons donc également configurer HTTPs pour `WebFlux`.
 
 ### Activer HTTP/2 et HTTPs
 
-Téléchargez et décompressez dans le répertoire `src/main/resources` du module `WebFlux` le contenu de cette archive: https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/gdrouet/nitghtclazz-spring5/tree/master/nc-spring-webflux/src/main/resources 
+Téléchargez et décompressez dans le répertoire `src/main/resources` du module `WebFlux` le contenu de cette archive: https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/Zenika/nightclazz-spring5/tree/master/nc-spring-webflux/src/main/resources 
 Vous y trouverez des informations de même nature que celles concernant HTTPs dans le répertoire du module `WebMvc`.
 
 Par défaut, `Spring Boot` doit pouvoir automatiquement configurer HTTPs avec les informations présentes, mais:
@@ -274,14 +274,12 @@ Notez que nous utilisons la version 10 de `Jetty`, toujours en `snapshot`.
 Cela nous permettra d'exploiter l'API servlet 4 afin de faire du `server-push` avec `HTTP/2`.
 Regardez également la version utilisée pour `ALPN` et assurez-vous qu'elle est compatible avec votre JDK.
 
-Il faut maintenant déclarer les beans de configuration.
-Pour `WebFlux`, il faut configurer un `ReactiveWebServerFactory`:
-* https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webflux/src/main/java/com/zenika/config/ReactiveWebServerFactoryConfig.java
-* https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webflux/src/main/java/com/zenika/config/CustomJettyReactiveWebServerFactory.java
+Il faut maintenant déclarer les configurations.
+Pour `WebFlux`, il faut configurer le support de SSL : https://github.com/Zenika/nightclazz-spring5/blob/master/nc-spring-webflux/src/main/resources/application.yml#L7-L11
 
 Pour `WebMvc`, on peut passer par un `WebServerFactoryCustomizer`:
-* https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/JettyHttp2Customizer.java
-* https://github.com/gdrouet/nitghtclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L33-L36
+* https://github.com/Zenika/nightclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/JettyHttp2Customizer.java
+* https://github.com/Zenika/nightclazz-spring5/blob/master/nc-spring-webmvc/src/main/java/com.zenika/WebmvcConfig.java#L33-L36
 
 ### Lancer WebMvc
 
