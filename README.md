@@ -228,7 +228,7 @@ Modifiez le `pom.xml` de `WebMvc` comme ceci (il faut plus de modules pour `HTTP
     <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.0-b05</version>
+        <version>4.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -237,6 +237,11 @@ Modifiez le `pom.xml` de `WebMvc` comme ceci (il faut plus de modules pour `HTTP
     <dependency>
         <groupId>org.eclipse.jetty.http2</groupId>
         <artifactId>http2-server</artifactId>
+        <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-alpn-openjdk8-server</artifactId>
         <version>${jetty.version}</version>
     </dependency>
     <dependency>
