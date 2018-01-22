@@ -21,7 +21,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
  *
  * @author Guillaume DROUET
  */
-//@Configuration
+@Configuration
 public class RouteConfig {
 
     /**
