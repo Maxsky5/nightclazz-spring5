@@ -69,6 +69,19 @@
             <artifactId>jetty-jndi</artifactId>
             <version>${jetty.version}</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-alpn-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty.alpn</groupId>
+            <artifactId>alpn-boot</artifactId>
+            <version>${alpn-version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
